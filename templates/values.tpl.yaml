@@ -1,0 +1,54 @@
+# Expose grafana
+grafana:
+  env:
+    GF_SERVER_ROOT_URL: https://${fqdn}/grafana
+    GF_SERVER_SERVE_FROM_SUB_PATH: 'true'
+  # username is 'admin'
+  # adminPassword: prom-operator
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - ${fqdn}
+    path: "/grafana(/|$)(.*)"
+    tls:
+    - secretName: ${secret}
+      hosts:
+      - ${fqdn}
+# Expose prometheus
+prometheus:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - ${fqdn}
+    paths:
+      - /prometheus
+    tls:
+    - secretName: letsencrypt-prod
+      hosts:
+      - ${fqdn}
+  prometheusSpec:
+    externalUrl: https://${fqdn}/prometheus
+    routePrefix: /prometheus
+# Expose alertmanager
+alertmanager:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - ${fqdn}
+    paths:
+      - "/alertmanager(/|$)(.*)"
+    tls:
+    - secretName: ${secret}
+      hosts:
+      - ${fqdn}
+  alertmanagerSpec: 
+    externalUrl: https://${fqdn}/alertmanager
+    routePrefix: /
