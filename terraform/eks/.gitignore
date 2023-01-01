@@ -1,4 +1,4 @@
-# Local .terraform and terragrunt directories
+# Local .terraform directories
 **/.terraform/*
 
 # .tfstate files
@@ -27,7 +27,3 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
-
-### Terragrunt ###
-# terragrunt cache directories
-**/.terragrunt-cache/*

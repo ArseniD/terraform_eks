@@ -1,0 +1,51 @@
+installCRDs: true
+replicaCount: ${replica_count}
+
+prometheus:
+  serviceMonitor:
+    enabled: true
+    labels:
+      namespace: ${namespace}
+
+affinity:
+  nodeAffinity:
+   requiredDuringSchedulingIgnoredDuringExecution:
+     nodeSelectorTerms:
+     - matchExpressions:
+       - key: ${label}
+         operator: In
+         values:
+         - ${label_value}
+
+webhook:
+  affinity:
+    nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+       - matchExpressions:
+         - key: ${label}
+           operator: In
+           values:
+           - ${label_value}
+
+cainjector:
+  affinity:
+    nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+       - matchExpressions:
+         - key: ${label}
+           operator: In
+           values:
+           - ${label_value}
+
+startupapicheck:
+  affinity:
+    nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+       - matchExpressions:
+         - key: ${label}
+           operator: In
+           values:
+           - ${label_value}

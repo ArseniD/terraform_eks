@@ -1,0 +1,29 @@
+controller:
+  replicaCount: ${replica_count}
+  affinity:
+    nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+       - matchExpressions:
+         - key: ${label}
+           operator: In
+           values:
+           - ${label_value}
+  metrics:
+    enabled: true
+    serviceMonitor:
+      additionalLabels:
+        release: prometheus
+      enabled: true
+
+defaultBackend:
+  replicaCount: ${replica_count}
+  affinity:
+    nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+       - matchExpressions:
+         - key: ${label}
+           operator: In
+           values:
+           - ${label_value}
